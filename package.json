@@ -6,7 +6,7 @@
   },
   "bugs": {
     "email": "tomaschochola@tomaschochola.cz",
-    "url": "https://github.com/tomaschochola/prettier-stack/issues"
+    "url": "https://github.com/tomaschochola/tooling-prettier/issues"
   },
   "contributors": [
     {
@@ -21,26 +21,26 @@
     "@prettier/plugin-xml": "^3.4.2",
     "prettier": "^3.8.1"
   },
-  "description": "@tomaschochola/prettier-stack",
+  "description": "@tomaschochola/tooling-prettier",
   "devDependencies": {
-    "@tomaschochola/eslint-stack": "github:tomaschochola/eslint-stack#1.x"
+    "@tomaschochola/tooling-eslint": "github:tomaschochola/tooling-eslint#1.x"
   },
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/tomaschochola"
   },
-  "homepage": "https://github.com/tomaschochola/prettier-stack",
+  "homepage": "https://github.com/tomaschochola/tooling-prettier",
   "keywords": [
     "tomaschochola",
     "TomasChochola",
     "Tomas Chochola",
     "Tomáš Chochola",
-    "prettier-stack"
+    "tooling-prettier"
   ],
   "license": "CC-BY-ND-4.0",
   "main": "./src/index.js",
-  "name": "@tomaschochola/prettier-stack",
-  "repository": "github:tomaschochola/prettier-stack",
+  "name": "@tomaschochola/tooling-prettier",
+  "repository": "github:tomaschochola/tooling-prettier",
   "sideEffects": false,
   "type": "module"
 }
