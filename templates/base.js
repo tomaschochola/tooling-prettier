@@ -10,7 +10,7 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { PrettierStack } from '@premierstacks/prettier-stack';
+import { PrettierStack } from '@tomaschochola/prettier-stack';
 
 // eslint-disable-next-line no-restricted-exports
 export default new PrettierStack()
