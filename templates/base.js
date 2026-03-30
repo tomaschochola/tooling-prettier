@@ -10,18 +10,9 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { EslintConfig } from '@tomaschochola/ts-tooling-eslint-config';
+import { PrettierStack } from '@premierstacks/prettier-stack';
 
 // eslint-disable-next-line no-restricted-exports
-export default EslintConfig.compose(
-  EslintConfig.base(),
-  EslintConfig.globalsRc(),
-  EslintConfig.globalsBrowser(),
-  EslintConfig.ignores(),
-  EslintConfig.ignores(['node_modules']),
-  EslintConfig.recommended(),
-  EslintConfig.typescript(),
-  EslintConfig.stylistic(),
-  EslintConfig.sonarjs(),
-  EslintConfig.typescriptDisabled(),
-);
+export default new PrettierStack()
+  .xml()
+  .build();
