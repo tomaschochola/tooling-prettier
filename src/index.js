@@ -20,6 +20,7 @@ export class Prettier {
       plugins: [],
       printWidth: 200,
       semi: true,
+      singleAttributePerLine: true,
       singleQuote: true,
       tabWidth: 2,
       trailingComma: 'all',
@@ -31,30 +32,30 @@ export class Prettier {
     return process.env.NODE_ENV;
   }
 
-  replace(config) {
+  replaceConfig(config) {
     this.config = { ...config };
 
     return this;
   }
 
-  pug(options = {}) {
-    return this.replace({
+  pluginPug(options = {}) {
+    return this.replaceConfig({
       ...this.config,
       plugins: [...this.config.plugins, '@prettier/plugin-pug'],
       ...options,
     });
   }
 
-  ruby(options = {}) {
-    return this.replace({
+  pluginRuby(options = {}) {
+    return this.replaceConfig({
       ...this.config,
       plugins: [...this.config.plugins, '@prettier/plugin-ruby'],
       ...options,
     });
   }
 
-  xml(options = {}) {
-    return this.replace({
+  pluginXml(options = {}) {
+    return this.replaceConfig({
       ...this.config,
       plugins: [...this.config.plugins, '@prettier/plugin-xml'],
       xmlQuoteAttributes: 'double',
@@ -63,7 +64,7 @@ export class Prettier {
     });
   }
 
-  build() {
+  buildConfig() {
     return { ...this.config };
   }
 }
