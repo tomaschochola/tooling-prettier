@@ -10,9 +10,9 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { Prettier } from './src/index.js';
+import { PrettierConfigBuilder } from './src/index.js';
 
 // eslint-disable-next-line no-restricted-exports
-export default new Prettier()
-  .pluginXml()
-  .buildConfig();
+export default new PrettierConfigBuilder()
+  .addXmlPlugin()
+  .toConfig();

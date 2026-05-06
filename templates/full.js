@@ -10,11 +10,11 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { Prettier } from '@tomaschochola/tooling-prettier';
+import { PrettierConfigBuilder } from '@tomaschochola/tooling-prettier';
 
 // eslint-disable-next-line no-restricted-exports
-export default new Prettier()
-  .pluginXml()
-  .pluginPug()
-  .pluginRuby()
-  .buildConfig();
+export default new PrettierConfigBuilder()
+  .addXmlPlugin()
+  .addPugPlugin()
+  .addRubyPlugin()
+  .toConfig();

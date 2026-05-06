@@ -10,11 +10,11 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-export class Prettier {
-  config;
+export class PrettierConfigBuilder {
+  #config;
 
   constructor() {
-    this.config = {
+    this.#config = {
       arrowParens: 'always',
       endOfLine: 'lf',
       plugins: [],
@@ -28,43 +28,47 @@ export class Prettier {
     };
   }
 
-  get NODE_ENV() {
-    return process.env.NODE_ENV;
-  }
-
-  replaceConfig(config) {
-    this.config = { ...config };
+  #replaceConfig(config) {
+    this.#config = { ...config };
 
     return this;
   }
 
-  pluginPug(options = {}) {
-    return this.replaceConfig({
-      ...this.config,
-      plugins: [...this.config.plugins, '@prettier/plugin-pug'],
+  #addPlugin(plugin) {
+    return this.#replaceConfig({
+      ...this.#config,
+      plugins: this.#config.plugins.includes(plugin) ? [...this.#config.plugins] : [...this.#config.plugins, plugin],
+    });
+  }
+
+  mergeOptions(options) {
+    return this.#replaceConfig({
+      ...this.#config,
       ...options,
     });
   }
 
-  pluginRuby(options = {}) {
-    return this.replaceConfig({
-      ...this.config,
-      plugins: [...this.config.plugins, '@prettier/plugin-ruby'],
-      ...options,
-    });
+  addPugPlugin() {
+    return this.#addPlugin('@prettier/plugin-pug');
   }
 
-  pluginXml(options = {}) {
-    return this.replaceConfig({
-      ...this.config,
-      plugins: [...this.config.plugins, '@prettier/plugin-xml'],
+  addRubyPlugin() {
+    return this.#addPlugin('@prettier/plugin-ruby');
+  }
+
+  addXmlPlugin() {
+    return this.#replaceConfig({
+      ...this.#config,
+      plugins: this.#config.plugins.includes('@prettier/plugin-xml') ? [...this.#config.plugins] : [...this.#config.plugins, '@prettier/plugin-xml'],
       xmlQuoteAttributes: 'double',
       xmlWhitespaceSensitivity: 'ignore',
-      ...options,
     });
   }
 
-  buildConfig() {
-    return { ...this.config };
+  toConfig() {
+    return {
+      ...this.#config,
+      plugins: [...this.#config.plugins],
+    };
   }
 }
