@@ -1,0 +1,96 @@
+/**
+ * @file
+ * @author Tomáš Chochola <tomaschochola@tomaschochola.cz>
+ * @copyright © 2026 Tomáš Chochola <tomaschochola@tomaschochola.cz>
+ *
+ * @license CC-BY-ND-4.0
+ *
+ * @see {@link https://creativecommons.org/licenses/by-nd/4.0/} License
+ * @see {@link https://github.com/tomaschochola} GitHub Profile
+ * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
+ */
+
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import { format } from 'prettier';
+
+import { PrettierConfigBuilder } from '../src/index.js';
+
+test('provides the complete shared formatting policy', () => {
+  const config = new PrettierConfigBuilder().toConfig();
+
+  assert.deepEqual(config, {
+    arrowParens: 'always',
+    bracketSameLine: false,
+    objectWrap: 'preserve',
+    plugins: [],
+    proseWrap: 'never',
+    semi: true,
+    singleAttributePerLine: true,
+    singleQuote: true,
+    trailingComma: 'all',
+  });
+});
+
+test('merges options without exposing mutable plugin arrays', () => {
+  const plugins = ['custom-plugin'];
+
+  const builder = new PrettierConfigBuilder().mergeOptions({
+    plugins,
+    printWidth: 120,
+  });
+
+  plugins.push('external-mutation');
+  const config = builder.toConfig();
+
+  config.plugins.push('output-mutation');
+
+  assert.equal(config.printWidth, 120);
+  assert.deepEqual(builder.toConfig().plugins, ['custom-plugin']);
+});
+
+test('adds the Pug plugin once and formats Pug source', async () => {
+  const config = new PrettierConfigBuilder()
+    .addPugPlugin()
+    .addPugPlugin()
+    .toConfig();
+
+  assert.deepEqual(config.plugins, ['@prettier/plugin-pug']);
+  assert.equal(
+    await format('div\n span hello\n', {
+      ...config,
+      parser: 'pug',
+    }),
+    'div\n  span hello\n',
+  );
+});
+
+test('adds the XML plugin once and preserves significant whitespace', async () => {
+  const config = new PrettierConfigBuilder()
+    .addXmlPlugin()
+    .addXmlPlugin()
+    .mergeOptions({ printWidth: 160 })
+    .toConfig();
+
+  assert.deepEqual(config.plugins, ['@prettier/plugin-xml']);
+  assert.equal(config.printWidth, 160);
+  assert.equal(config.xmlQuoteAttributes, 'double');
+  assert.equal(config.xmlSelfClosingSpace, false);
+  assert.equal(config.xmlWhitespaceSensitivity, 'preserve');
+  assert.equal(
+    await format('<?xml version="1.0"?><root key=\'value\'><value>  a   b  </value><empty /></root>\n', {
+      ...config,
+      parser: 'xml',
+    }),
+    '<?xml version="1.0"?>\n<root key="value">\n  <value>  a   b  </value>\n  <empty/>\n</root>\n',
+  );
+});
+
+test('copy templates expose the intended base and full configurations', async () => {
+  const { default: baseConfig } = await import('../templates/base.js?test=base');
+  const { default: fullConfig } = await import('../templates/full.js?test=full');
+
+  assert.deepEqual(baseConfig.plugins, []);
+  assert.deepEqual(fullConfig.plugins, ['@prettier/plugin-xml', '@prettier/plugin-pug']);
+});

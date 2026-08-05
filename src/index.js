@@ -16,15 +16,14 @@ export class PrettierConfigBuilder {
   constructor() {
     this.#config = {
       arrowParens: 'always',
-      endOfLine: 'lf',
+      bracketSameLine: false,
+      objectWrap: 'preserve',
       plugins: [],
-      printWidth: 200,
+      proseWrap: 'never',
       semi: true,
       singleAttributePerLine: true,
       singleQuote: true,
-      tabWidth: 2,
       trailingComma: 'all',
-      useTabs: false,
     };
   }
 
@@ -45,6 +44,7 @@ export class PrettierConfigBuilder {
     return this.#replaceConfig({
       ...this.#config,
       ...options,
+      plugins: options.plugins === undefined ? [...this.#config.plugins] : [...options.plugins],
     });
   }
 
@@ -52,16 +52,13 @@ export class PrettierConfigBuilder {
     return this.#addPlugin('@prettier/plugin-pug');
   }
 
-  addRubyPlugin() {
-    return this.#addPlugin('@prettier/plugin-ruby');
-  }
-
   addXmlPlugin() {
     return this.#replaceConfig({
       ...this.#config,
       plugins: this.#config.plugins.includes('@prettier/plugin-xml') ? [...this.#config.plugins] : [...this.#config.plugins, '@prettier/plugin-xml'],
       xmlQuoteAttributes: 'double',
-      xmlWhitespaceSensitivity: 'ignore',
+      xmlSelfClosingSpace: false,
+      xmlWhitespaceSensitivity: 'preserve',
     });
   }
 
