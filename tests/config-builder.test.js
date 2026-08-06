@@ -51,10 +51,7 @@ test('merges options without exposing mutable plugin arrays', () => {
 });
 
 test('adds the Pug plugin once and formats Pug source', async () => {
-  const config = new PrettierConfigBuilder()
-    .addPugPlugin()
-    .addPugPlugin()
-    .toConfig();
+  const config = new PrettierConfigBuilder().addPugPlugin().addPugPlugin().toConfig();
 
   assert.deepEqual(config.plugins, ['@prettier/plugin-pug']);
   assert.equal(
@@ -67,11 +64,7 @@ test('adds the Pug plugin once and formats Pug source', async () => {
 });
 
 test('formats XML with the default whitespace policy', async () => {
-  const config = new PrettierConfigBuilder()
-    .addXmlPlugin()
-    .addXmlPlugin()
-    .mergeOptions({ printWidth: 160 })
-    .toConfig();
+  const config = new PrettierConfigBuilder().addXmlPlugin().addXmlPlugin().mergeOptions({ printWidth: 160 }).toConfig();
 
   assert.deepEqual(config.plugins, ['@prettier/plugin-xml']);
   assert.equal(config.printWidth, 160);
