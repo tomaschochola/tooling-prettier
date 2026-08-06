@@ -66,7 +66,7 @@ test('adds the Pug plugin once and formats Pug source', async () => {
   );
 });
 
-test('adds the XML plugin once and preserves significant whitespace', async () => {
+test('formats XML with the default whitespace policy', async () => {
   const config = new PrettierConfigBuilder()
     .addXmlPlugin()
     .addXmlPlugin()
@@ -76,21 +76,23 @@ test('adds the XML plugin once and preserves significant whitespace', async () =
   assert.deepEqual(config.plugins, ['@prettier/plugin-xml']);
   assert.equal(config.printWidth, 160);
   assert.equal(config.xmlQuoteAttributes, 'double');
-  assert.equal(config.xmlSelfClosingSpace, false);
+  assert.equal(config.xmlSelfClosingSpace, true);
   assert.equal(config.xmlWhitespaceSensitivity, 'preserve');
   assert.equal(
     await format('<?xml version="1.0"?><root key=\'value\'><value>  a   b  </value><empty /></root>\n', {
       ...config,
       parser: 'xml',
     }),
-    '<?xml version="1.0"?>\n<root key="value">\n  <value>  a   b  </value>\n  <empty/>\n</root>\n',
+    '<?xml version="1.0" ?>\n<root key="value">\n  <value>  a   b  </value>\n  <empty />\n</root>\n',
   );
 });
 
-test('copy templates expose the intended base and full configurations', async () => {
+test('copy templates expose the intended configuration tiers', async () => {
   const { default: baseConfig } = await import('../templates/base.js?test=base');
+  const { default: recommendedConfig } = await import('../templates/recommended.js?test=recommended');
   const { default: fullConfig } = await import('../templates/full.js?test=full');
 
   assert.deepEqual(baseConfig.plugins, []);
+  assert.deepEqual(recommendedConfig.plugins, ['@prettier/plugin-xml']);
   assert.deepEqual(fullConfig.plugins, ['@prettier/plugin-xml', '@prettier/plugin-pug']);
 });

@@ -12,5 +12,4 @@
 
 import { PrettierConfigBuilder } from '@tomaschochola/tooling-prettier';
 
-// eslint-disable-next-line no-restricted-exports
 export default new PrettierConfigBuilder().toConfig();

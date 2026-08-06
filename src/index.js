@@ -57,7 +57,7 @@ export class PrettierConfigBuilder {
       ...this.#config,
       plugins: this.#config.plugins.includes('@prettier/plugin-xml') ? [...this.#config.plugins] : [...this.#config.plugins, '@prettier/plugin-xml'],
       xmlQuoteAttributes: 'double',
-      xmlSelfClosingSpace: false,
+      xmlSelfClosingSpace: true,
       xmlWhitespaceSensitivity: 'preserve',
     });
   }
