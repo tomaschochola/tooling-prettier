@@ -42,12 +42,7 @@
         "TomasChochola",
         "Tomas Chochola",
         "Tomáš Chochola",
-        "code-formatting",
-        "formatter",
-        "prettier",
-        "pug",
-        "tooling-prettier",
-        "xml"
+        "tooling-prettier"
     ],
     "license": "CC-BY-ND-4.0",
     "main": "./src/index.js",
