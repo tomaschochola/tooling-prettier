@@ -22,8 +22,8 @@
     },
     "description": "Shared Prettier configuration builder and formatter plugin presets.",
     "devDependencies": {
-        "@tomaschochola/tooling-eslint": "file:../tooling-eslint",
-        "@tomaschochola/tooling-trimmer": "file:../tooling-trimmer"
+        "@tomaschochola/tooling-eslint": "git+https://github.com/tomaschochola/tooling-eslint.git",
+        "@tomaschochola/tooling-trimmer": "git+https://github.com/tomaschochola/tooling-trimmer.git"
     },
     "exports": {
         ".": "./src/index.js"
